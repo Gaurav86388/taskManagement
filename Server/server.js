@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import bodyParser from "body-parser"
 import userRouter from "./Routes/userRouter.js"
-import taskRouter from "./Routes/taskRouter.js"
+import taskRouter from "./Routes/TaskRouter.js"
 
 const app = express()
 const PORT = 3000
