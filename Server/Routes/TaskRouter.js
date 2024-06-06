@@ -34,41 +34,38 @@ function authenticateToken(req, res, next) {
 taskRouter.get("/tasks", async (req, res) => {
   let taskData;
   try {
-    taskData = await tasks.find({});
+    taskData = await tasks.find();
   } catch (e) {
     console.log("No data found");
   }
   console.log(taskData);
-  if (!taskData) {
-    return res.status(200).json({ status: "success", message: "Task List Empty" });
+  if (taskData.length === 0) {
+    return res
+      .status(200)
+      .json({ status: "success", message: "Task List Empty" });
   } else {
-    return res.status(200).json({status: "success", body: taskData});
+    return res.status(200).json({ status: "success", body: taskData });
   }
 });
 
-taskRouter.get("/tasks/:id", async(req, res)=>{
+taskRouter.get("/tasks/:id", async (req, res) => {
+  const id = req.params.id;
 
-const id = req.params.id
+  let taskData;
+  try {
+    taskData = await tasks.findOne({ id: id });
+  } catch (e) {
+    console.log(e);
+  }
 
-let taskData
-try{
-    taskData = await tasks.findOne({id: id})
-
-}
-catch(e){
-    console.log(e)
-}
-
-if(!taskData) {
-    return res.status(400).json({ status: "failed", message: "task does not exist" });
-}
-else{
+  if (!taskData) {
+    return res
+      .status(400)
+      .json({ status: "failed", message: "task does not exist" });
+  } else {
     return res.status(200).json({ status: "success", body: taskData });
-}
-
-
+  }
 });
-
 
 taskRouter.post("/tasks", async (req, res) => {
   const newData = req.body;
@@ -78,24 +75,73 @@ taskRouter.post("/tasks", async (req, res) => {
 
   try {
     taskData = await tasks.findOne({ id: id });
-  } 
-  catch (e) {
+  } catch (e) {
     console.log(e);
   }
 
-  if(!taskData) {
-    await tasks.create(newData)
-    .then(()=>{
-        return res.status(200).json({status: "success", message:  "task added"})
-    })
-    .catch(e=>console.log(e))
-}
-else{
-    return res.status(400).json({ status: "failed", message: "task already exists" });
-}
+  if (!taskData) {
+    await tasks
+      .create(newData)
+      .then(() => {
+        return res
+          .status(200)
+          .json({ status: "success", message: "task added" });
+      })
+      .catch((e) => console.log(e));
+  } else {
+    return res
+      .status(400)
+      .json({ status: "failed", message: "task already exists" });
+  }
 });
 
-taskRouter.put("/tasks/:id");
-taskRouter.delete("/tasks/:id");
+taskRouter.put("/tasks/:id", async (req, res) => {
+  const id = req.params.id;
+  const updatedValue = req.body;
+
+  let taskData;
+  try {
+    taskData = await tasks.findOne({ id: id });
+  } catch (e) {
+    console.error(e);
+  }
+
+  if (taskData) {
+    await tasks
+      .updateOne({ id: id }, { $set: updatedValue })
+      .then(() => {
+        return res
+          .status(200)
+          .json({ status: "success", message: "task value updated" });
+      })
+      .catch((e) => console.log(e));
+  } else {
+    return res
+      .status(400)
+      .json({ status: "failed", message: "task does not exist" });
+  }
+});
+
+taskRouter.delete("/tasks/:id", async (req, res) => {
+  const id = req.params.id;
+
+  let taskData;
+
+  try {
+    taskData = await tasks.deleteOne({ id: id });
+  } catch (e) {
+    console.error(e);
+  }
+
+  if (taskData.deletedCount !== 0) {
+    return res.status(200).json({ status: "Task deleted" });
+  } else {
+    return res
+      .status(400)
+      .json({ status: "failed", message: "task does not exist" });
+  }
+});
 
 export default taskRouter;
+
+//need to add middleware at last
