@@ -2,8 +2,8 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import bodyParser from "body-parser"
-import userRouter from "./Routes/userRouter"
-import taskRouter from "./Routes/taskRouter"
+import userRouter from "./Routes/userRouter.js"
+import taskRouter from "./Routes/taskRouter.js"
 
 const app = express()
 const PORT = 3000
@@ -17,7 +17,7 @@ app.use(express.json())
 async function main(){
 
 try{
-    await mongoose.connect("mongodb://localhost:27017")
+    await mongoose.connect("mongodb://localhost:27017/tasks")
     .then(()=>console.log("db connected successfully"))
 }
 catch(e){

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { users } from "../schema/userSchema.js";
+import users  from "../Model/userSchema.js";
 
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
