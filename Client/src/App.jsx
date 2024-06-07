@@ -1,15 +1,19 @@
-import { useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Dashboard from './pages/Dashboard'
+import "bootstrap/dist/css/bootstrap.min.css";
+import Dashboard from "./pages/Dashboard";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SignIn from "./pages/SignIn";
+import Register from "./pages/Register";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-  <Dashboard />
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

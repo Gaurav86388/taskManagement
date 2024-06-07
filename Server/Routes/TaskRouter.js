@@ -70,7 +70,6 @@ taskRouter.get("/tasks/:id", async (req, res) => {
 taskRouter.post("/tasks", async (req, res) => {
   const newData = req.body;
   const { id } = req.body;
-  console.log(newData);
   let taskData;
 
   try {
@@ -124,7 +123,7 @@ taskRouter.put("/tasks/:id", async (req, res) => {
 
 taskRouter.delete("/tasks/:id", async (req, res) => {
   const id = req.params.id;
-
+  console.log(id)
   let taskData;
 
   try {

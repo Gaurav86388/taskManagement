@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import FormComponent from "./FormComponent";
 
@@ -10,7 +9,7 @@ const AddTaskComponent = ({ showAddModal, handleAddModal }) => {
         <Modal.Title>Add New Task</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <FormComponent />
+        <FormComponent handleAddModal={handleAddModal}/>
       </Modal.Body>
 
     </Modal>

@@ -44,7 +44,7 @@ userRouter.post("/login", async (req, res) => {
 
 userRouter.post("/register", async (req, res) => {
   const { username, password } = req.body;
-
+  console.log(req.body)
   let existingEmail;
 
   try {

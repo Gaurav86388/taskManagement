@@ -1,26 +1,23 @@
-import React from 'react'
-import NavBarComponent from '../components/NavBarComponent'
-import Content from '../components/Content';
-import AddTaskComponent from '../components/AddTaskComponent';
-import { useState } from 'react';
-import DeleteTaskComponent from '../components/DeleteTaskComponent';
+import React from "react";
+import NavBarComponent from "../components/NavBarComponent";
+import Content from "../components/Content";
+import AddTaskComponent from "../components/AddTaskComponent";
+import { useState } from "react";
 
 const Dashboard = () => {
-
-    
   const [showAddTask, setShowAddTask] = useState(false);
-
-  const handleAddModal = () => setShowAddTask(prev=>!prev);
-
+  const handleAddModal = () => setShowAddTask((prev) => !prev);
 
   return (
     <div>
-      <NavBarComponent handleAddModal={handleAddModal}/>
+      <NavBarComponent handleAddModal={handleAddModal} />
       <Content />
-      <AddTaskComponent showAddModal = {showAddTask} handleAddModal={handleAddModal}/>
-      <DeleteTaskComponent />
+      <AddTaskComponent
+        showAddModal={showAddTask}
+        handleAddModal={handleAddModal}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
